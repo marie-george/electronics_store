@@ -50,6 +50,12 @@ class Item:
         self.item_price = self.item_price * self.pay_rate
         return self.item_price
 
+    def __repr__(self):
+        return f'Item({self.__item_name}, {self.item_price}, {self.item_quantity})'
+
+    def __str__(self):
+        return self.__item_name
+
 
 
 
