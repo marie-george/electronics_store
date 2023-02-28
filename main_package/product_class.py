@@ -1,6 +1,5 @@
 import csv
 
-
 class Item:
     pay_rate = 0.85
     all_items = []
@@ -55,6 +54,15 @@ class Item:
 
     def __str__(self):
         return self.__item_name
+
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.item_quantity + other.item_quantity
+        else:
+            raise ValueError('Только объекты Item, Phone')
+
+
+
 
 
 
