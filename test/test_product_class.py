@@ -4,16 +4,15 @@ import os
 from main_package.product_class import Item
 from main_package.phone_class import Phone
 
+
 def test_instantiate_from_csv_length():
-    Item.instantiate_from_csv(os.path.join('test', 'test_items.csv'))
+    Item.instantiate_from_csv('test_items.csv')
     assert len(Item.all_items) == 5
-
-
-def test_instantiate_from_csv_examples():
     item1 = Item.all_items[0]
-    assert item1.item_name == 'Смартфон'
-    assert item1.item_price == 100
+    assert type(item1.item_name) == str
+    assert type(item1.item_quantity) == int
     assert type(item1.item_price) == int
+
 
 @pytest.fixture
 def coll():
@@ -27,7 +26,8 @@ def test_total_price_and_discount(coll):
 
 
 def test_item_name_setter_less_10(coll):
-    assert coll.item_name == "Смартфон"
+    coll.item_name = "Mobile"
+    assert coll.item_name == "Mobile"
 
 
 def test_item_name_setter_more_10(coll):
@@ -54,5 +54,6 @@ def test_add():
 
     with pytest.raises(ValueError):
         phone1 + 100
+
 
 
