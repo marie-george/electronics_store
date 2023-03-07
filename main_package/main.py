@@ -1,9 +1,13 @@
 from product_class import*
+from phone_class import*
 
-item1 = Item("Смартфон", 10000, 20)
-print(repr(item1))
+phone1 = Phone("iPhone 14", 120_000, 5, 2)
 
-print(item1)
+phone1.number_of_sim = 0
+
+print(phone1.number_of_sim)
+
+
 
 
 
