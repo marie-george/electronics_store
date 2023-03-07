@@ -2,6 +2,7 @@ from main_package.product_class import Item
 
 
 class Phone(Item):
+    all_items = []
 
     def __init__(self, item_name, item_price, item_quantity, number_of_sim):
         super().__init__(item_name, item_price, item_quantity)
