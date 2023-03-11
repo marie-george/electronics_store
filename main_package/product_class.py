@@ -1,4 +1,5 @@
 import csv
+from exceptions import InstantiateCSVError
 
 class Item:
     pay_rate = 0.85
@@ -30,16 +31,29 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, file):
-        with open(file, 'r', encoding='windows-1251') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                price = row['price']
-                if cls.is_integer(price):
-                    price = int(float(price))
-                quantity = row['quantity']
-                if cls.is_integer(quantity):
-                    quantity = int(float(quantity))
-                cls(row['name'], price, quantity)
+        try:
+            with open(file, 'r', encoding='windows-1251') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    price = row['price']
+                    if price is None:
+                        raise InstantiateCSVError
+                    if cls.is_integer(price):
+                        price = int(float(price))
+                    quantity = row['quantity']
+                    if quantity is None:
+                        raise InstantiateCSVError
+                    if cls.is_integer(quantity):
+                        quantity = int(float(quantity))
+                    else:
+                        raise InstantiateCSVError
+                    cls(row['name'], price, quantity)
+        except FileNotFoundError:
+            print('Отсутствует файл item.csv')
+        except InstantiateCSVError as e:
+            print(e)
+        # except InstantiateCSVError as e:
+        #     print(e)
 
     def calculate_total_price(self):
         total_price = self.item_price * self.item_quantity
