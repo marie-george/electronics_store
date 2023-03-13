@@ -3,15 +3,25 @@ import os
 
 from main_package.product_class import Item
 from main_package.phone_class import Phone
+from main_package.exceptions import InstantiateCSVError
 
 
-def test_instantiate_from_csv_length():
+def test_instantiate_from_csv_correct_file():
     Item.instantiate_from_csv('test_items.csv')
     assert len(Item.all_items) == 5
     item1 = Item.all_items[0]
     assert type(item1.item_name) == str
     assert type(item1.item_quantity) == int
     assert type(item1.item_price) == int
+
+
+def test_instantiate_from_csv_corrupted_file():
+    assert Item.instantiate_from_csv('test_items_2.csv') == print('Файл item.csv поврежден')
+
+
+def test_instantiate_from_csv_file_not_found():
+    assert Item.instantiate_from_csv('test_items_3.csv') == print('Отсутствует файл csv')
+
 
 
 @pytest.fixture
@@ -40,11 +50,14 @@ def test_is_integer():
     assert Item.is_integer(5.0) == True
     assert Item.is_integer(5.5) == False
 
+
 def test_repr(coll):
      assert repr(coll) == 'Item(Смартфон, 10000, 20)'
 
+
 def test_str(coll):
     assert str(coll) == 'Смартфон'
+
 
 def test_add():
     item1 = Item("Смартфон", 10000, 5)
