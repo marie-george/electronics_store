@@ -1,5 +1,6 @@
 import csv
-from exceptions import InstantiateCSVError
+from main_package.exceptions import InstantiateCSVError
+
 
 class Item:
     pay_rate = 0.85
@@ -49,11 +50,10 @@ class Item:
                         raise InstantiateCSVError
                     cls(row['name'], price, quantity)
         except FileNotFoundError:
-            print('Отсутствует файл item.csv')
+            print('Отсутствует файл csv')
         except InstantiateCSVError as e:
             print(e)
-        # except InstantiateCSVError as e:
-        #     print(e)
+
 
     def calculate_total_price(self):
         total_price = self.item_price * self.item_quantity
